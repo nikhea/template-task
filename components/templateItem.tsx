@@ -9,8 +9,8 @@ const templateItem: FC<templateItemProps> = ({ template }) => {
     <div className="card">
       <div className="card__text">
         <h1>
-          {/* {template.name} */}
-          alumni membership form template
+          {template.name}
+          {/* alumni membership form template */}
         </h1>
         <h2>
           Engage your alumni network better with this alumni registration form

@@ -11,12 +11,13 @@ body {
 .container {
   @apply w-[80%] m-auto;
   .gridItem {
-    @apply grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+    @apply grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
   }
 }
 
 .card {
-  @apply shadow-xl my-5 pt-10 bg-white max-w-[358px]  min-h-[229px] flex flex-col justify-between;
+  // max-w-[358px]
+  @apply shadow-xl my-5 pt-10 bg-white    min-h-[300px] flex flex-col justify-between;
   .card__text {
     @apply mx-5;
 
@@ -32,5 +33,15 @@ body {
     a {
       @apply capitalize text-[#08BD37] text-[1.3rem] mx-5 font-bold;
     }
+  }
+}
+
+.pagination {
+  @apply text-[#3F3F3F] flex justify-between my-10 capitalize font-semibold text-xl items-center;
+  span {
+    @apply border border-solid border-2 px-5 py-3 rounded-md border-black mr-4;
+  }
+  button {
+    @apply capitalize;
   }
 }

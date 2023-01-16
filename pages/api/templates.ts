@@ -24,7 +24,7 @@ export default async function handler(
   try {
     // const { data } = await axios.get(API_ENDPOINT);
     const {
-      query: { name, sort, category, page = 2, limit = 12 },
+      query: { name, sort, category, page = 1, limit = 5 },
     } = req;
     const cacheKey = `${name}-${sort}-${category}-${page}-${limit}`;
     if (cache[cacheKey]) {
@@ -56,7 +56,15 @@ export default async function handler(
     const endIndex = page * limit;
     const paginatedData = filteredData.slice(startIndex, endIndex);
     const totalPages = Math.ceil(filteredData.length / limit);
-    cache[cacheKey] = paginatedData;
+
+    cache[cacheKey] = {
+      data: paginatedData,
+      total: filteredData.length,
+      currentPage: page,
+      limit: limit,
+      totalPages: totalPages,
+    };
+
     res.setHeader("Cache-Control", "max-age=3600");
     res.json({
       data: paginatedData,

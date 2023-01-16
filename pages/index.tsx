@@ -4,15 +4,29 @@ import { useTemplate } from "../hooks/useTemplate";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import Head from "next/head";
 import TemplateItem from "../components/templateItem";
-
+import Pagination from "../components/pagination";
+import { useState } from "react";
 const Home: NextPage = () => {
-  const { data, isLoading } = useTemplate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading } = useTemplate(currentPage);
 
-  const templateList = data.data.map((template: any, index: number) => (
+  // let currentPageNumber =
+  if (!data) return null;
+  const templateList = data.data?.map((template: any, index: number) => (
     <div key={index}>
       <TemplateItem template={template} />
     </div>
   ));
+  const handleNext = () => {
+    if (parseInt(data.currentPage) < data.totalPages) {
+      setCurrentPage(parseInt(data.currentPage) + 1);
+    }
+  };
+  const handlePrevious = () => {
+    if (parseInt(data.currentPage) > 1) {
+      setCurrentPage(parseInt(data.currentPage) - 1);
+    }
+  };
   return (
     <div>
       <Head>
@@ -25,7 +39,13 @@ const Home: NextPage = () => {
           <div className="gridItem ">
             {isLoading ? "loading" : templateList}
           </div>
-        </div>{" "}
+          <Pagination
+            handlePrevious={handlePrevious}
+            handleNext={handleNext}
+            totalpages={data.totalPages}
+            currentpage={parseInt(data.currentPage)}
+          />
+        </div>
       </main>
     </div>
   );
@@ -35,10 +55,11 @@ export default Home;
 
 export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
-  const data = await queryClient.fetchQuery(["template"], () => getTemplate());
+  queryClient.clear();
+  // const data = await queryClient.fetchQuery(["template"], () => getTemplate());
   return {
     props: {
-      data,
+      // data,
       dehydratedState: dehydrate(queryClient),
     },
   };
