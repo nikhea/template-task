@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  //   @apply bg-[#e4dede];
+}
+.container {
+  @apply w-[80%] m-auto;
+  .gridItem {
+    @apply grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+}
+
+.card {
+  @apply shadow-xl my-5 pt-10 bg-white max-w-[358px]  min-h-[229px] flex flex-col justify-between;
+  .card__text {
+    @apply mx-5;
+
+    h1 {
+      @apply text-[1.5rem] font-medium text-[#333447] capitalize;
+    }
+    h2 {
+      @apply text-[1rem] font-[400] my-5 text-[#3F3E3E];
+    }
+  }
+  .card__link {
+    @apply bg-[#F9F9F9] py-3;
+    a {
+      @apply capitalize text-[#08BD37] text-[1.3rem] mx-5 font-bold;
+    }
+  }
+}
