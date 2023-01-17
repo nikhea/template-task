@@ -28,7 +28,7 @@ const pagination: FC<paginationProps> = ({
       </h2>
       <button
         onClick={handleNext}
-        disabled={currentpage === totalpages}
+        disabled={currentpage === totalpages || currentpage >= totalpages}
         style={{
           cursor: currentpage === totalpages ? "not-allowed" : "pointer",
         }}

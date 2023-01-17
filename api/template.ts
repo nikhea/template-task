@@ -10,3 +10,4 @@ export const getTemplate = async (currentPage: number) => {
   //   console.log(`post ${data} fetched`);
   return data;
 };
+// &limit=${limitProperties}
