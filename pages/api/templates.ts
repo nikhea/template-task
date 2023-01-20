@@ -1,8 +1,9 @@
 //@ts-nocheck
 import type { NextApiRequest, NextApiResponse } from "next";
+import NextCors from "nextjs-cors";
 import axios from "axios";
 import { Router } from "next/router";
-
+import Cors from "cors";
 import { data } from "../../data/dummydata";
 let dummydata = data;
 type templateData = {
@@ -13,16 +14,47 @@ type templateData = {
   name: string;
   error: any;
 };
+
+// Initializing the cors middleware
+// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+const cors = Cors({
+  methods: ["POST", "GET", "HEAD"],
+});
 const API_ENDPOINT =
   "https://front-end-task-dot-result-analytics-dot-fpls-dev.uc.r.appspot.com/api/v1/public/task_templates";
 
 const corsanywhere = "https://cors-anywhere.herokuapp.com";
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+function runMiddleware(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  fn: Function
+) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
+
 let cache = {};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<templateData>
 ) {
+  // Run the middleware
+  await runMiddleware(req, res, cors);
   try {
+    await NextCors(req, res, {
+      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+      origin: "*",
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
     // const { data } = await axios.get(API_ENDPOINT);
     // console.log(data.length);
 
