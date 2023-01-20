@@ -4,10 +4,10 @@ import * as api from "../api/template";
 interface useTemplateProps {
   currentPage: number;
 }
-export const useTemplate = (currentPage: number) => {
+export const useTemplate = (currentPage: number, filters: any) => {
   return useQuery(
-    ["template", currentPage],
-    () => api.getTemplate(currentPage),
+    ["template", currentPage, filters],
+    () => api.getTemplate(currentPage, filters),
     {
       keepPreviousData: true,
     }

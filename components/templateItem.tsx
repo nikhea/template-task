@@ -14,7 +14,7 @@ const templateItem: FC<templateItemProps> = ({ template }) => {
         </h1>
         <h2>
           Engage your alumni network better with this alumni registration form
-          template. Embed this in your website...
+          template. Embed this in your website
           {/* {template.description} */}
         </h2>
       </div>
@@ -24,7 +24,8 @@ const templateItem: FC<templateItemProps> = ({ template }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          use template
+          preview template
+          <i className="fa fa-long-arrow-right mx-5 text-2xl"></i>
         </Link>
       </div>{" "}
     </div>

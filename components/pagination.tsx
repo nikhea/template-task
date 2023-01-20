@@ -20,6 +20,7 @@ const pagination: FC<paginationProps> = ({
         disabled={currentpage === 1}
         style={{ cursor: currentpage === 1 ? "not-allowed" : "pointer" }}
       >
+        <i className="fa fa-angle-left text-2xl mx-5" aria-hidden="true"></i>{" "}
         previous
       </button>
       <h2>
@@ -34,6 +35,7 @@ const pagination: FC<paginationProps> = ({
         }}
       >
         next
+        <i className="fa fa-angle-right text-2xl mx-5" aria-hidden="true"></i>
       </button>
     </div>
   );

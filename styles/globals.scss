@@ -6,7 +6,6 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  //   @apply bg-[#e4dede];
 }
 .container {
   @apply w-[80%] m-auto;
@@ -17,7 +16,7 @@ body {
 
 .card {
   // max-w-[358px]
-  @apply shadow-lg my-5 pt-10 bg-white    min-h-[300px] 
+  @apply shadow-xl my-5 pt-10 bg-white    min-h-[300px] 
   flex flex-col justify-between cursor-pointer 
   hover:shadow-2xl transition ease-in-out duration-500;
   .card__text {
@@ -33,7 +32,7 @@ body {
   .card__link {
     @apply bg-[#F9F9F9] py-3;
     a {
-      @apply capitalize text-[#08BD37] text-[1.3rem] mx-5 font-bold;
+      @apply capitalize text-[#08BD37] text-[1.3rem] mx-5 font-light flex  items-center;
     }
   }
 }
@@ -44,12 +43,12 @@ body {
     @apply border border-solid border-2 px-5 py-3 rounded-md border-black mr-4;
   }
   button {
-    @apply capitalize;
+    @apply capitalize flex  items-center;
   }
 }
 
 .input-group {
-  @apply flex items-center justify-between max-w-sm max-h-16;
+  @apply flex items-center justify-between lg:max-w-sm max-h-16;
   .form-control {
     @apply border border-0 w-full;
   }
@@ -90,10 +89,11 @@ textarea,
   rounded-[10px] w-full;
 }
 .select-container {
-  @apply flex  flex-col lg:flex-row  justify-between items-center  gap-5;
+  @apply flex  flex-col lg:flex-row  justify-between items-center  gap-5 w-full  
+  lg:w-[30%];
   @apply text-[#E5E5E5];
   .select-group {
-    @apply flex items-center justify-between min-w-[14rem];
+    @apply flex items-center justify-between w-full lg:min-w-[14rem];
     select {
       @apply w-full  border-0 p-0 px-5 min-h-[2rem];
     }
@@ -102,5 +102,6 @@ textarea,
 // min-w-[24rem] min-h-[4rem]
 
 .header-container {
-  @apply flex  flex-col  items-center  lg:flex-row  justify-between  mt-10 mb-5;
+  @apply flex  flex-col  items-center  lg:flex-row  justify-between  mt-10 mb-5 mr-[10rem] sm:w-full lg:w-auto;
+  // @apply flex  flex-col  lg:flex-row justify-between mr-[10rem] mx-auto;
 }

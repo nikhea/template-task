@@ -8,52 +8,57 @@ import Header from "../components/header";
 import TemplateItem from "../components/templateItem";
 import Pagination from "../components/pagination";
 const Home: NextPage = () => {
+  const [filters, setFilters] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  // const { data, isLoading } = useTemplate(parseInt(currentPage));
+  const { status, data, error } = useTemplate(currentPage, filters);
+  if (!data) return null;
   // console.log(data.totalPages);
 
   // let currentPageNumber =
-  // if (!data) return null;
-  // const templateList = data.data?.map((template: any, index: number) => (
-  //   <div key={index}>
-  //     <TemplateItem template={template} />
-  //   </div>
-  // ));
-  // const handleNext = () => {
-  //   if (data.currentPage < data.totalPages) {
-  //     setCurrentPage(data.currentPage + 1);
-  //   }
-  // };
-  // const handlePrevious = () => {
-  //   if (data.currentPage > 1) {
-  //     setCurrentPage(data.currentPage - 1);
-  //   }
-  // };
+
+  const templateList = data.data?.map((template: any, index: number) => (
+    <div key={index}>
+      <TemplateItem template={template} />
+    </div>
+  ));
+  const handleNext = () => {
+    if (data.currentPage < data.totalPages) {
+      setCurrentPage(data.currentPage + 1);
+    }
+  };
+  const handlePrevious = () => {
+    if (data.currentPage > 1) {
+      setCurrentPage(data.currentPage - 1);
+    }
+  };
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  // if (status === "error") {
+  //   ts-ignore
+  //   return <div>Error: {error.message}</div>;
+  // }
+
   return (
     <div>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-          integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-          crossOrigin="anonymous"
-        />
       </Head>
 
       <main>
         <div className="container">
-          <Header />
-          {/* <div className="gridItem ">
-            {isLoading ? "loading" : templateList}
-          </div> */}
-          {/* <Pagination
+          <Header onFilterChange={setFilters} />
+          <div className="gridItem ">{templateList}</div>
+
+          <Pagination
             handlePrevious={handlePrevious}
             handleNext={handleNext}
             totalpages={data.totalPages}
             currentpage={data.currentPage}
-          /> */}
+          />
         </div>
       </main>
     </div>

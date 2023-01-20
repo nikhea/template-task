@@ -1,9 +1,10 @@
+//@ts-nocheck
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { Router } from "next/router";
 
-// import { data } from "../../data/dummydata";
-// let dummydata = data;
+import { data } from "../../data/dummydata";
+let dummydata = data;
 type templateData = {
   category: string[];
   createdAt: string;
@@ -22,30 +23,45 @@ export default async function handler(
   res: NextApiResponse<templateData>
 ) {
   try {
-    const { data } = await axios.get(API_ENDPOINT);
+    // const { data } = await axios.get(API_ENDPOINT);
     // console.log(data.length);
 
     const {
       query: { name, sort, category, page = 1, limit = 6 },
     } = req;
+    // console.log(name, sort, category);
+
     const cacheKey = `${name}-${sort}-${category}-${page}-${limit}`;
-    // if (cache[cacheKey]) {
-    //   res.json(cache[cacheKey]);
-    //   return;
-    // }
+    if (cache[cacheKey]) {
+      res.json(cache[cacheKey]);
+      return;
+    }
     if (isNaN(page) || isNaN(limit)) {
       res.status(400).json({ error: "Invalid page or limit parameter" });
       return;
     }
-    let filteredData = data;
+    let filteredData = dummydata;
     if (name) {
       filteredData = data.filter((item) =>
         item.name.toLowerCase().includes(name.toLowerCase())
       );
+      console.log(filteredData);
     }
     if (sort === "date") {
       filteredData = filteredData.sort(
         (a, b) => new Date(b.created) - new Date(a.created)
+      );
+    }
+    if (sort === sort) {
+      filteredData = filteredData.sort(
+        (a, b) => new Date(b.created) - new Date(a.created)
+      );
+      console.log(filteredData);
+      console.log(sort);
+    }
+    if (sort === "new") {
+      filteredData = filteredData.sort(
+        (a, b) => new Date(a.created) - new Date(b.created)
       );
     }
     if (category) {
@@ -59,15 +75,15 @@ export default async function handler(
     const paginatedData = filteredData.slice(startIndex, endIndex);
     const totalPages = Math.ceil(filteredData.length / limit);
 
-    // cache[cacheKey] = {
-    //   data: paginatedData,
-    //   total: filteredData.length,
-    //   currentPage: page,
-    //   limit: limit,
-    //   totalPages: totalPages,
-    // };
+    cache[cacheKey] = {
+      data: paginatedData,
+      total: filteredData.length,
+      currentPage: page,
+      limit: limit,
+      totalPages: totalPages,
+    };
 
-    // res.setHeader("Cache-Control", "max-age=3600");
+    res.setHeader("Cache-Control", "max-age=3600");
     res.json({
       data: paginatedData,
       total: filteredData.length,
