@@ -1,8 +1,5 @@
 //@ts-nocheck
 import type { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
-import { Router } from "next/router";
-
 // import { data } from "../../data/dummydata";
 type Data = {
   category: string[];
@@ -74,7 +71,6 @@ export default async function handler(
 //
 //
 
-import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { createClient } from "redis";
 
