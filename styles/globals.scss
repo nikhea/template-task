@@ -40,11 +40,14 @@ body {
 
 .pagination {
   @apply text-[#3F3F3F] flex justify-between my-10 capitalize font-semibold text-xl items-center;
-  span {
+  .span {
     @apply border border-solid border-2 px-5 py-3 rounded-md border-black mr-4;
   }
   button {
-    @apply capitalize flex  items-center;
+    @apply capitalize  flex  items-center;
+    span {
+      @apply hidden md:flex;
+    }
   }
 }
 

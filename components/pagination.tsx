@@ -21,10 +21,10 @@ const pagination: FC<paginationProps> = ({
         style={{ cursor: currentpage === 1 ? "not-allowed" : "pointer" }}
       >
         <i className="mx-5 text-2xl fa fa-angle-left" aria-hidden="true"></i>{" "}
-        previous
+        <span>previous</span>
       </button>
       <h2>
-        <span>{currentpage}</span>
+        <span className="span">{currentpage}</span>
         of {totalpages}
       </h2>
       <button
@@ -34,7 +34,8 @@ const pagination: FC<paginationProps> = ({
           cursor: currentpage === totalpages ? "not-allowed" : "pointer",
         }}
       >
-        next
+        <span>next</span>
+
         <i className="mx-5 text-2xl fa fa-angle-right" aria-hidden="true"></i>
       </button>
     </div>
