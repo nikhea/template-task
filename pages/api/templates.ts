@@ -5,7 +5,7 @@ import axios from "axios";
 import { Router } from "next/router";
 import Cors from "cors";
 import { data } from "../../data/dummydata";
-let dummydata = data;
+// let dummydata = data;
 type templateData = {
   category: string[];
   createdAt: string;
@@ -42,7 +42,7 @@ function runMiddleware(
   });
 }
 
-let cache = {};
+// let cache = {};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<templateData>
@@ -56,23 +56,23 @@ export default async function handler(
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
     // const { data } = await axios.get(API_ENDPOINT);
-    // console.log(data.length);
+    // console.log(data);
 
     const {
       query: { name, sort, category, page = 1, limit = 6 },
     } = req;
     // console.log(name, sort, category);
 
-    const cacheKey = `${name}-${sort}-${category}-${page}-${limit}`;
-    if (cache[cacheKey]) {
-      res.json(cache[cacheKey]);
-      return;
-    }
+    // const cacheKey = `${name}-${sort}-${category}-${page}-${limit}`;
+    // if (cache[cacheKey]) {
+    //   res.json(cache[cacheKey]);
+    //   return;
+    // }
     if (isNaN(page) || isNaN(limit)) {
       res.status(400).json({ error: "Invalid page or limit parameter" });
       return;
     }
-    let filteredData = dummydata;
+    let filteredData = data;
     if (name) {
       filteredData = data.filter((item) =>
         item.name.toLowerCase().includes(name.toLowerCase())
@@ -88,8 +88,6 @@ export default async function handler(
       filteredData = filteredData.sort(
         (a, b) => new Date(b.created) - new Date(a.created)
       );
-      console.log(filteredData);
-      console.log(sort);
     }
     if (sort === "new") {
       filteredData = filteredData.sort(
@@ -107,15 +105,15 @@ export default async function handler(
     const paginatedData = filteredData.slice(startIndex, endIndex);
     const totalPages = Math.ceil(filteredData.length / limit);
 
-    cache[cacheKey] = {
-      data: paginatedData,
-      total: filteredData.length,
-      currentPage: page,
-      limit: limit,
-      totalPages: totalPages,
-    };
+    // cache[cacheKey] = {
+    //   data: paginatedData,
+    //   total: filteredData.length,
+    //   currentPage: parseInt(page),
+    //   limit: limit,
+    //   totalPages: totalPages,
+    // };
 
-    res.setHeader("Cache-Control", "max-age=3600");
+    // res.setHeader("Cache-Control", "max-age=3600");
     res.json({
       data: paginatedData,
       total: filteredData.length,

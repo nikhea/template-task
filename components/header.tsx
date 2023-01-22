@@ -25,6 +25,8 @@ const header = ({ onFilterChange }: any) => {
   const handleCategoryChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
+    console.log(event.target.value);
+
     setCategory(event.target.value);
     onFilterChange({ name, sort, category });
   };

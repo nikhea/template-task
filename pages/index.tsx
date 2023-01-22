@@ -10,11 +10,12 @@ import Pagination from "../components/pagination";
 const Home: NextPage = () => {
   const [filters, setFilters] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const { status, data, error } = useTemplate(currentPage, filters);
+  // const { status, data, error, isFetching, isLoading, fetchStatus } =
+  //   useTemplate(currentPage, filters);
+  const response = useTemplate(currentPage, filters);
+  const { data, isLoading } = response;
   if (!data) return null;
-  // console.log(data.totalPages);
-
-  // let currentPageNumber =
+  console.log(isLoading);
 
   const templateList = data.data?.map((template: any, index: number) => (
     <div key={index}>
@@ -32,13 +33,12 @@ const Home: NextPage = () => {
     }
   };
 
-  if (status === "loading") {
+  if (response.isLoading) {
     return <div>Loading...</div>;
   }
 
-  // if (status === "error") {
-  //   ts-ignore
-  //   return <div>Error: {error.message}</div>;
+  // if (status !== "success") {
+  //   return <div>Error</div>;
   // }
 
   return (
